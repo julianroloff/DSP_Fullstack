@@ -1,0 +1,50 @@
+.compareList-container {
+    display: flex;
+    gap: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+    width: 100%;
+}
+
+.buildingImage-container {
+    display: flex;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 32px;
+    padding-top: 32px;
+    width: 100%;
+}
+
+.buildingInformation-container {
+    display: flex;
+    gap: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 32px;
+    padding-top: 32px;
+    width: 100%;
+}
+
+.subHeaderElement-container {
+    display: flex;
+    gap: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 32px;
+    padding-top: 32px;
+    width: 100%;
+}
+
+@media (max-width: 850px){
+    .compareList-container {
+        flex-direction: column;
+    }
+
+    .buildingImage-container {
+        flex-direction: column;
+    }
+
+    .buildingInformation-container {
+        flex-direction: column;
+    }
+}
