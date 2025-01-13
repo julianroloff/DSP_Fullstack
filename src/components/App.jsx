@@ -12,9 +12,15 @@ class App extends Component {
         return <React.Fragment>
                     <Navbar/>
                     <div className="subHeaderElement-container">
-                        <Tabs tab1="Science Park 904" tab2="Ertskade 160" tab3="Piet Heinkade 27"/>
-                        <button type="button" class="btn btn-primary btn-lg">Download Report</button>
-                        <SearchBar/>
+                        <div className="adress-container">
+                            <Tabs tab1="Science Park 904" tab2="Ertskade 160" tab3="Piet Heinkade 27"/>
+                        </div>
+                        <div className="downloadButton-container">
+                            <button type="button" class="btn btn-primary btn-lg">Download Report</button>
+                        </div>
+                        <div className="searchBar-container">
+                            <SearchBar/>
+                        </div>
                     </div>
                     <div className="buildingInformation-container">
                         <BuildingInformation title="Adress" information="Science Park 904" additionalInfo="1019BB Amsterdam"/>
@@ -24,9 +30,14 @@ class App extends Component {
                     <div className="buildingImage-container">
                         <BuildingImage image="building.jpg" title="BIM Model"/>
                     </div>
-                    <div className="compareList-container">
-                        <CompareList title="Component vs Regulation"/>
-                        <CompareList title="Regulations and Standards for this Object"/>
+                    <div className="list-container">
+                        <div className="compareList-container">
+                            <CompareList title="Component vs Regulation"/>
+                        </div>
+                        <div className="regulation-container">
+                            <CompareList title="Regulations and Standards for this Object"/>
+
+                        </div>
                     </div>
             </React.Fragment>;
     }

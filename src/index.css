@@ -1,41 +1,71 @@
-.compareList-container {
+.list-container {
     display: flex;
-    gap: 32px;
-    padding-left: 32px;
-    padding-right: 32px;
     width: 100%;
+    gap: 32px;
+    box-sizing: border-box;
+    padding-left: 64px;
+    padding-right: 96px;
+}
+
+.compareList-container {
+    flex: 0 0 40%;
+    max-width: 40%;
+    box-sizing: border-box;
+}
+
+.regulation-container {
+    flex: 0 0 60%;
+    max-width: 60%;
+    box-sizing: border-box;
 }
 
 .buildingImage-container {
-    display: flex;
-    padding-left: 32px;
-    padding-right: 32px;
-    padding-bottom: 32px;
-    padding-top: 32px;
-    width: 100%;
+    display: block;
+    padding-left: 64px;
+    padding-right: 64px;
+    padding-bottom: 64px;
+    padding-top: 64px;
+    align-items: flex-start;
+    justify-content: center;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    width: 50%;
 }
 
 .buildingInformation-container {
-    display: flex;
-    gap: 32px;
-    padding-left: 32px;
-    padding-right: 32px;
-    padding-bottom: 32px;
-    padding-top: 32px;
+    display: flex; 
+    gap: 32px; 
+    justify-content: center; 
+    align-items: flex-start; 
     width: 100%;
+    flex-wrap: wrap;
+    padding-left: 64px;
+    padding-right: 64px;
+    box-sizing: border-box; 
 }
 
 .subHeaderElement-container {
     display: flex;
-    gap: 32px;
-    padding-left: 32px;
-    padding-right: 32px;
-    padding-bottom: 32px;
-    padding-top: 32px;
     width: 100%;
+    gap: 32px;
+    box-sizing: border-box;
+    padding-top: 32px;
+    padding-left: 64px;
+    padding-right: 96px; 
 }
 
-@media (max-width: 850px){
+.downloadButton-container,
+.searchBar-container,
+.adress-container {
+    flex: 1 33%;
+    max-width: 33%;
+    box-sizing: border-box;
+}
+
+
+
+
+@media (max-width: 400px){
     .compareList-container {
         flex-direction: column;
     }
