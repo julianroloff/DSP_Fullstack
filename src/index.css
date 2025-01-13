@@ -1,10 +1,23 @@
+.main-header {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 32px;
+    padding-left: 64px;
+    padding-right: 64px;
+}
+
 .list-container {
     display: flex;
     width: 100%;
     gap: 32px;
     box-sizing: border-box;
     padding-left: 64px;
-    padding-right: 96px;
+    padding-right: 64px;
+    padding-top: 32px;
+    padding-bottom: 32px;
 }
 
 .compareList-container {
@@ -32,35 +45,63 @@
     width: 50%;
 }
 
-.buildingInformation-container {
+.subHeaderElement-container {
     display: flex; 
-    gap: 32px; 
-    justify-content: center; 
-    align-items: flex-start; 
-    width: 100%;
-    flex-wrap: wrap;
-    padding-left: 64px;
-    padding-right: 64px;
-    box-sizing: border-box; 
+    width: 100%; 
+    gap: 32px;
+    box-sizing: border-box;
+    padding: 32px 64px 32px 64px; 
 }
 
-.subHeaderElement-container {
+.subHeaderElementLeft-container {
+    flex: 0 70%; 
+    display: flex;
+    align-items: center;
+}
+
+.subHeaderElementRight-container {
+    flex: 0 30%;
+    display: flex;
+    align-items: center;
+    gap: 64px; 
+    justify-content: flex-end;
+}
+
+.downloadButton-container {
+    flex: 0 0 10%;
+    max-width: 10%;
+    box-sizing: border-box;
+}
+
+.searchBar-container {
+    flex: 90%; 
+    max-width: 90%;
+    box-sizing: border-box;
+}
+
+.tab-container {
+    flex: 1; 
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.buildingInformation-container {
     display: flex;
     width: 100%;
     gap: 32px;
     box-sizing: border-box;
-    padding-top: 32px;
     padding-left: 64px;
-    padding-right: 96px; 
+    padding-right: 64px;
 }
 
-.downloadButton-container,
-.searchBar-container,
-.adress-container {
-    flex: 1 33%;
-    max-width: 33%;
+.infoAddress-container,
+.infoYear-container,
+.infoBvsR-container {
+    flex: 0 0 32%;
+    max-width: 32%;
     box-sizing: border-box;
 }
+
 
 
 
