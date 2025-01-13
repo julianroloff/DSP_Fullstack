@@ -9,12 +9,13 @@ import RegulationList from './regulationList';
 
 class App extends Component {
     state = {
+        // ToDo: This is dummy data, needs to be replaced once a working backend exists
         compareData: [
             { component: "Windows", regulationsMet: false, dueYear: "2030" },
             { component: "Walls", regulationsMet: true, dueYear: "--" },
             { component: "Doors", regulationsMet: false, dueYear: "2045" }
         ],
-
+        // ToDo: This is dummy data, needs to be replaced once a working backend exists
         regulations: [
             {
                 name: "Residential Building Regulation Regulation Amsterdam",
@@ -32,6 +33,15 @@ class App extends Component {
                 pdf: "https://example.com/document3.pdf"
             }
         ],
+        // ToDo: This is dummy data, needs to be replaced once a working backend exists
+        buildingData: [
+            {
+                address: "Science Park 904",
+                postalCode:"1019BB",
+                city:"Amsterdam",
+                buildingYear:"2009"
+            }
+        ]
     } 
     render() { 
         return <React.Fragment>
@@ -41,7 +51,7 @@ class App extends Component {
                 <div className="subHeaderElement-container">
                     <div className="subHeaderElementLeft-container">
                         <div className="tab-container">
-                            <Tabs tab1="Science Park 904" tab2="Ertskade 160" tab3="Piet Heinkade 27"/>
+                            <Tabs data={this.state.buildingData}/>
                         </div>
                     </div>
                     <div className="subHeaderElementRight-container">
@@ -55,10 +65,10 @@ class App extends Component {
                 </div>
                 <div className="buildingInformation-container">
                     <div className="infoAddress-container">
-                        <BuildingInformation title="Address" information="Science Park 904" additionalInfo="1019BB Amsterdam"/>
+                        <BuildingInformation title="Address" information={this.state.buildingData[0].address} additionalInfo={this.state.buildingData[0].postalCode + " " + this.state.buildingData[0].city}/>
                     </div>
                     <div className="infoYear-container">
-                        <BuildingInformation title="Year" information="2009"/>
+                        <BuildingInformation title="Year" information={this.state.buildingData[0].buildingYear}/>
                     </div>
                     <div className="infoBvsR-container">
                         <BuildingInformation title="Building vs Regulation" information="27% Retrofit" additionalInfo="*to meet Regulations until 2030"/>

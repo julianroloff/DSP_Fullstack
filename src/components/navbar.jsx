@@ -35,6 +35,7 @@ class Navbar extends Component {
                             <input
                                 type="file"
                                 id="file-upload"
+                                accept=".ifc"
                                 style={{ display: 'none' }}
                                 onChange={(event) => {
                                     const file = event.target.files[0];
