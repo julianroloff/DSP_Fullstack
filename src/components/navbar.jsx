@@ -37,9 +37,42 @@ class Navbar extends Component {
                                 id="file-upload"
                                 accept=".ifc"
                                 style={{ display: 'none' }}
-                                onChange={(event) => {
+                                onChange={async (event) => {
                                     const file = event.target.files[0];
-                                    console.log('Selected file:', file);
+                                    console.log("Selected file:", file);
+                                
+                                    if (!file) {
+                                        alert("Please select a file!");
+                                        return;
+                                    }
+                                
+                                    // Create FormData to upload the file
+                                    const formData = new FormData();
+                                    formData.append("ifcFile", file);
+                                
+                                    try {
+                                        const response = await fetch("http://localhost:3000/api/ifc-to-rdf", {
+                                            method: "POST",
+                                            body: formData,
+                                        });
+                                
+                                        if (!response.ok) {
+                                            throw new Error(`Error: ${response.statusText}`);
+                                        }
+                                
+                                        // Handle file download
+                                        const blob = await response.blob();
+                                        const url = window.URL.createObjectURL(blob);
+                                        const a = document.createElement("a");
+                                        a.href = url;
+                                        a.download = "converted.ttl"; // File name for the user
+                                        a.click();
+                                        window.URL.revokeObjectURL(url);
+                                        alert("File successfully converted to RDF!");
+                                    } catch (error) {
+                                        console.error("Error uploading file:", error);
+                                        alert("Failed to convert IFC file to RDF. Please try again.");
+                                    }
                                 }}
                             />
                         </div>
