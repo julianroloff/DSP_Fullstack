@@ -18,13 +18,26 @@ def convert_ifc_to_rdf(ifc_file_path):
             name = getattr(element, "Name", "Unknown")
             global_id = getattr(element, "GlobalId", "Unknown")
             
+            # Check for Thermal Transmittance if the element is a window
+            u_value = "Unknown"
+            if ifc_type == "IfcWindow":
+                for rel in ifc_file.by_type("IfcRelDefinesByProperties"):
+                    if element.id() in [related.id() for related in rel.RelatedObjects]:
+                        property_set = rel.RelatingPropertyDefinition
+                        if hasattr(property_set, "HasProperties"):
+                            for prop in property_set.HasProperties:
+                                if prop.Name == "ThermalTransmittance":
+                                    u_value = prop.NominalValue.wrappedValue
+                                    break
+            
+            # Add RDF data for the element
             rdf_data += f"""
                 ex:{prefix}{index} a ifc:{ifc_type} ;
                     ex:hasName "{name}" ;
-                    ex:hasGlobalId "{global_id}" .
+                    ex:hasGlobalId "{global_id}" ;
+                    ex:hasThermalTransmittance "{u_value}" .
             """
     return rdf_data
-
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
