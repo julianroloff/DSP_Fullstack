@@ -1,0 +1,134 @@
+
+        @prefix ex: <http://example.org/> .
+        @prefix ifc: <http://ifcowl.openbimstandards.org/IFC2X3_TC1#> .
+    
+                ex:Window0 a ifc:IfcWindow ;
+                    ex:hasName "Windows_Sgl_Plain:1810x1210mm:286105" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyWcE" ;
+                    ex:hasThermalTransmittance "5.5617" .
+            
+                ex:Window1 a ifc:IfcWindow ;
+                    ex:hasName "Windows_Sgl_Plain:1810x1210mm:286188" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyWdx" ;
+                    ex:hasThermalTransmittance "5.5617" .
+            
+                ex:Window2 a ifc:IfcWindow ;
+                    ex:hasName "Windows_Sgl_Plain:1810x1210mm:286238" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyWe9" ;
+                    ex:hasThermalTransmittance "5.5617" .
+            
+                ex:Window3 a ifc:IfcWindow ;
+                    ex:hasName "Windows_Sgl_Plain:1810x1210mm:287567" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyZTO" ;
+                    ex:hasThermalTransmittance "5.5617" .
+            
+                ex:Wall0 a ifc:IfcWall ;
+                    ex:hasName "Basic Wall:Wall-Ext_102Bwk-75Ins-100LBlk-12P:285330" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyWw5" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Wall1 a ifc:IfcWall ;
+                    ex:hasName "Basic Wall:Wall-Ext_102Bwk-75Ins-100LBlk-12P:285395" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyWx4" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Wall2 a ifc:IfcWall ;
+                    ex:hasName "Basic Wall:Wall-Ext_102Bwk-75Ins-100LBlk-12P:285459" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyWy4" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Wall3 a ifc:IfcWall ;
+                    ex:hasName "Basic Wall:Wall-Partn_12P-70MStd-12P:285792" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyWXt" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Wall4 a ifc:IfcWall ;
+                    ex:hasName "Basic Wall:Wall-Partn_12P-70MStd-12P:285846" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyWY1" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Door0 a ifc:IfcDoor ;
+                    ex:hasName "Doors_ExtDbl_Flush:1810x2110mm:285860" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyWYp" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Door1 a ifc:IfcDoor ;
+                    ex:hasName "Doors_IntSgl:810x2110mm:285959" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyWaG" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Door2 a ifc:IfcDoor ;
+                    ex:hasName "Doors_IntSgl:810x2110mm:285996" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyWax" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame0 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Furniture_Desk:1525x762mm:287689" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyZVU" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame1 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Furniture_Table_Dining_w-Chairs_Rectangular:2000x1000x750mm_w-6_Seats:289768" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyZ$$" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame2 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Chair - Dining:Chair - Dining:289769" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyZ$_" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame3 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Chair - Dining:Chair - Dining:289770" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyZ$z" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame4 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Chair - Dining:Chair - Dining:289771" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyZ$y" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame5 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Chair - Dining:Chair - Dining:289772" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyZ$x" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame6 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Chair - Dining:Chair - Dining:290097" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyZac" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame7 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Chair - Dining:Chair - Dining:290098" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyZab" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame8 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Furniture_Couch_Viper:2290x950x340mm:290852" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyYGp" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame9 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Furniture_Chair_Viper:1120x940x350mm:291916" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyY1R" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame10 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Furniture_Chair_Viper:1120x940x350mm:292127" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyY48" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame11 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Furniture_Table_Coffee_1:1200x550x450mm:293046" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyYoX" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame12 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Furniture_Piano:1370x600x1170mm:293961" ;
+                    ex:hasGlobalId "3cUkl32yn9qRSPvBJVyYXU" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
+                ex:Frame13 a ifc:IfcFurnishingElement ;
+                    ex:hasName "Furniture_Bed_1:1525x2007x355mm-Queen:295878" ;
+                    ex:hasGlobalId "1RS53LK$j6KOlAGwxTiY8D" ;
+                    ex:hasThermalTransmittance "Unknown" .
+            
