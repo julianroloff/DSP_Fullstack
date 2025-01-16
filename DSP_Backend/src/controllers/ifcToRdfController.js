@@ -5,12 +5,15 @@ import fs from "fs";
 export const handleIfcUpload = (req, res) => {
     try {
         const ifcFilePath = req.file.path; // Path to the uploaded IFC file
-        const rdfFilePath = path.join("uploads", `${req.file.filename}.ttl`); // Path for the output RDF file
+        const outputFileName = `${req.file.filename}.ttl`;
+        const rdfFilePath = path.join("stored_rdf_files", outputFileName);
 
-        // Use the Anaconda Python interpreter explicitly
+        if (!fs.existsSync("stored_rdf_files")) {
+            fs.mkdirSync("stored_rdf_files");
+        }
+
         const pythonInterpreter = "/opt/anaconda3/bin/python";
 
-        // Command to execute the Python script
         const command = `${pythonInterpreter} src/utils/ifc_to_rdf.py ${ifcFilePath} ${rdfFilePath}`;
         
         exec(command, (error, stdout, stderr) => {
@@ -21,16 +24,13 @@ export const handleIfcUpload = (req, res) => {
 
             console.log("Python script output:", stdout);
 
-            // Send the RDF file as a downloadable response
-            res.download(rdfFilePath, "converted.ttl", (err) => {
-                if (err) {
-                    console.error("Error sending RDF file:", err);
-                }
-
-                // Clean up temporary files
-                fs.unlinkSync(ifcFilePath); // Delete the uploaded IFC file
-                fs.unlinkSync(rdfFilePath); // Delete the generated RDF file
+            res.status(200).json({
+                message: "File successfully converted and stored",
+                rdfFilePath: rdfFilePath,
             });
+
+            // Optionally clean up the uploaded IFC file
+            fs.unlinkSync(ifcFilePath);
         });
     } catch (error) {
         console.error("Error during IFC-to-RDF conversion:", error);
