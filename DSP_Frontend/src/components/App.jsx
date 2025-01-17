@@ -6,16 +6,35 @@ import BuildingInformation from './buildingInformation';
 import Tabs from './tabs';
 import SearchBar from './searchBar';
 import RegulationList from './regulationList';
+import EnergySavingsGraph from './EnergySavingsGraph';
+
 
 class App extends Component {
     state = {
         // ToDo: This is dummy data, needs to be replaced once a working backend exists
-        compareData: [],
+        compareData: [
+            { component: "Windows", regulationsMet: false, dueYear: "2030" },
+            { component: "Walls", regulationsMet: true, dueYear: "--" },
+            { component: "Doors", regulationsMet: false, dueYear: "2045" }
+        ],
         // ToDo: This is dummy data, needs to be replaced once a working backend exists
         regulations: [],
         // ToDo: This is dummy data, needs to be replaced once a working backend exists
-        buildingData: []
+        buildingData: [],
+
+        fileUploaded: false
     } 
+
+    handleFileUpload = (uploadedData) => {
+        this.setState({
+            fileUploaded: true,
+            compareData: [
+                { component: "Windows", regulationsMet: false, dueYear: "2030" },
+                { component: "Walls", regulationsMet: true, dueYear: "--" },
+                { component: "Doors", regulationsMet: false, dueYear: "2045" }
+            ]
+        });
+    };
 
     componentDidMount() {
         fetch("/api/buildings")
@@ -32,7 +51,11 @@ class App extends Component {
     }
     
 
-    render() { 
+    renderContent = () => { 
+
+        if(!this.state.fileUploaded) {
+            return <p style={{ textAlign: 'center', marginTop: '20px' }}>Please upload an IFC file.</p>;
+        }
 
         const { buildingData } = this.state;
 
@@ -42,9 +65,6 @@ class App extends Component {
 
         
         return <React.Fragment>
-                <header className="main-header">
-                    <Navbar/>
-                </header>
                 <div className="subHeaderElement-container">
                     <div className="subHeaderElementLeft-container">
                         <div className="tab-container">
@@ -82,17 +102,22 @@ class App extends Component {
                         />
                     </div>
                 </div>
-                <div className="buildingImage-container">
-                    <BuildingImage 
-                    image="building.jpg" 
-                    title="BIM Model"
-                    />
+                <div className="imageGraph-container">
+                    <div className="buildingImage-container">
+                        <BuildingImage 
+                        image="building.jpg" 
+                        title="BIM Model"
+                        />
+                    </div>
+                    <div className="energySavingsGraph-container">
+                        <EnergySavingsGraph />
+                    </div>
                 </div>
                 <div className="list-container">
                     <div className="compareList-container">
                         <CompareList 
-                        title="Component vs Regulation" 
-                        data={this.state.compareData}
+                            title="Component vs Regulation" 
+                            data={this.state.compareData} 
                         />
                     </div>
                     <div className="regulation-container">
@@ -103,6 +128,17 @@ class App extends Component {
                     </div>
                 </div>
             </React.Fragment>;
+    }
+
+    render() {
+        return (
+            <>
+                <header className="main-header">
+                    <Navbar onFileUpload={this.handleFileUpload} />
+                </header>
+                {this.renderContent()}
+            </>
+        )
     }
 }
  
