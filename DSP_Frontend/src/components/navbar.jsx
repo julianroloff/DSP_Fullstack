@@ -46,7 +46,6 @@ class Navbar extends Component {
                                         return;
                                     }
                                 
-                                    // Create FormData to upload the file
                                     const formData = new FormData();
                                     formData.append("ifcFile", file);
                                 
@@ -60,6 +59,13 @@ class Navbar extends Component {
                                             throw new Error(`Error: ${response.statusText}`);
                                         }
                                 
+                                        // Clone the response to read both JSON and Blob
+                                        const responseClone = response.clone();
+                                
+                                        // Handle JSON response for state updates
+                                        const uploadedData = await responseClone.json();
+                                        this.props.onFileUpload(uploadedData); // Notify App component
+                                
                                         // Handle file download
                                         const blob = await response.blob();
                                         const url = window.URL.createObjectURL(blob);
@@ -68,12 +74,15 @@ class Navbar extends Component {
                                         a.download = "converted.ttl"; // File name for the user
                                         a.click();
                                         window.URL.revokeObjectURL(url);
+                                
                                         alert("File successfully converted to RDF!");
                                     } catch (error) {
                                         console.error("Error uploading file:", error);
                                         alert("Failed to convert IFC file to RDF. Please try again.");
                                     }
                                 }}
+                                
+                                
                             />
                         </div>
 
