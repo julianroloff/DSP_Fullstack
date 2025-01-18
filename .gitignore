@@ -34,3 +34,6 @@ yarn-error.log*
 
 # Ignoriere das gesamte Home-Verzeichnis
 /Users/*
+
+
+/DSP_Backend/stored_rdf_files
