@@ -6,6 +6,7 @@ import BuildingInformation from './buildingInformation';
 import Tabs from './tabs';
 import SearchBar from './searchBar';
 import EnergySavingsGraph from './EnergySavingsGraph';
+import RegulationList from './regulationList';
 
 class App extends Component {
     state = {
@@ -28,6 +29,7 @@ class App extends Component {
             alert("Failed to fetch comparison data. Please try again.");
         }
     };
+    
 
     componentDidMount() {
         fetch("/api/buildings")
@@ -52,25 +54,63 @@ class App extends Component {
             <React.Fragment>
                 <div className="subHeaderElement-container">
                     <div className="subHeaderElementLeft-container">
-                        <Tabs data={buildingData} />
+                        <div className="tab-container">
+                            <Tabs data={buildingData}/>
+                        </div>
                     </div>
                     <div className="subHeaderElementRight-container">
-                        <SearchBar />
+                        <div className="downloadButton-container">
+                            <button type="button" className="btn btn-primary btn-lg" style={{ fontSize: '8px' }}>Download Report</button>
+                        </div>
+                        <div className="searchBar-container">
+                            <SearchBar/>
+                        </div>
                     </div>
                 </div>
                 <div className="buildingInformation-container">
-                    <BuildingInformation 
+                    <div className="infoAddress-container">
+                        <BuildingInformation 
                         title="Address" 
-                        information={`${buildingData[0]?.address || ""}`} 
-                        additionalInfo={`${buildingData[0]?.postalCode || ""} ${buildingData[0]?.city || ""}`} 
-                    />
+                        information={`${buildingData[0].address}, ${buildingData[0].buildingNumber}`} 
+                        additionalInfo={`${buildingData[0].postalCode}  ${buildingData[0].city}`}
+                        />
+                    </div>
+                    <div className="infoYear-container">
+                        <BuildingInformation 
+                        title="Year" 
+                        information={`${buildingData[0].buildingYear}`}
+                        />
+                    </div>
+                    <div className="infoBvsR-container">
+                        <BuildingInformation 
+                        title="Building vs Regulation" 
+                        information="27% Retrofit" 
+                        additionalInfo="*to meet Regulations until 2030"
+                        />
+                    </div>
                 </div>
                 <div className="imageGraph-container">
-                    <BuildingImage image="building.jpg" title="BIM Model" />
-                    <EnergySavingsGraph />
+                    <div className="buildingImage-container">
+                        <BuildingImage 
+                        image="building.jpg" 
+                        title="BIM Model"
+                        />
+                    </div>
+                    <div className="energySavingsGraph-container">
+                        <EnergySavingsGraph />
+                    </div>
                 </div>
                 <div className="list-container">
-                    <CompareList title="Component vs Regulation" data={compareData} />
+                    <div className="compareList-container">
+                        <CompareList title="Component vs Regulation" data={compareData}
+                        />
+                    </div>
+                    <div className="regulation-container">
+                        <RegulationList 
+                        title="Regulations and Standards for this Object" 
+                        regulations={this.state.regulations}
+                        />
+                    </div>
                 </div>
             </React.Fragment>
         );

@@ -111,6 +111,9 @@
     box-sizing: border-box;
 }
 
+.lineGraph-container {
+    padding: 5rem; 
+}
 
 
 

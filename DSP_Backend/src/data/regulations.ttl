@@ -1,13 +1,13 @@
-@prefix ex: <http://example.com/> .
+@prefix ex: <http://example.org/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:Regulation1 a ex:Regulation ;
-    ex:appliesTo ex:Window ;
+    ex:appliesTo ex:IfcWindow ;
     ex:maxUValue "2.2"^^xsd:float ;
     ex:unit "W/m²·K"^^xsd:string .
 
 ex:Regulation2 a ex:Regulation ;
-    ex:appliesTo ex:Door ;
+    ex:appliesTo ex:IfcDoor ;
     ex:maxUValue "2.2"^^xsd:float ;
     ex:unit "W/m²·K"^^xsd:string .
 
@@ -15,18 +15,3 @@ ex:Regulation3 a ex:Regulation ;
     ex:appliesTo ex:Frame ;
     ex:maxUValue "2.2"^^xsd:float ;
     ex:unit "W/m²·K"^^xsd:string .
-
-ex:Regulation4 a ex:Regulation ;
-    ex:appliesTo ex:SimilarConstructionPart ;
-    ex:maxUValue "2.2"^^xsd:float ;
-    ex:unit "W/m²·K"^^xsd:string .
-
-ex:Regulation5 a ex:Regulation ;
-    ex:appliesTo ex:OtherConstructionPart ;
-    ex:minRcValue "3.5"^^xsd:float ;
-    ex:unit "(m²·K)/W"^^xsd:string .
-
-ex:Regulation6 a ex:Regulation ;
-    ex:appliesTo ex:Caravan ;
-    ex:minRcValue "2.5"^^xsd:float ;
-    ex:unit "(m²·K)/W"^^xsd:string .

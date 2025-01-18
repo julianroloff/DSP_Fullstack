@@ -32,7 +32,14 @@ const EnergySavingsGraph = () => {
         }
     };
 
-    return <Line data={data} options={options} />;
+    return  <div className="card">
+                <div className="card-header">
+                    Energy Efficiency (EUI kWh/m<sup>2</sup>/y) <span style={{ fontWeight: "lighter", fontSize: "0.9em" }}>*if retrofitted</span>
+                </div>
+                <div className="lineGraph-container">
+                    <Line data={data} options={options} />
+                </div>
+            </div>
 };
 
 export default EnergySavingsGraph;

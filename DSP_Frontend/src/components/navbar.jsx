@@ -23,22 +23,12 @@ class Navbar extends Component {
                 throw new Error(`Error: ${response.statusText}`);
             }
 
-            // Clone the response to read JSON and Blob data
-            const responseClone = response.clone();
-
-            // JSON response for state updates
-            const uploadedData = await responseClone.json();
+            // Parse the response as JSON for further processing
+            const uploadedData = await response.json();
             console.log("Uploaded data:", uploadedData);
-            this.props.onFileUpload(uploadedData); // Notify the parent component (App)
 
-            // Handle file download
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "converted.ttl"; // File name for the user
-            a.click();
-            window.URL.revokeObjectURL(url);
+            // Notify the parent component (App) about the uploaded data
+            this.props.onFileUpload(uploadedData);
 
             alert("File successfully converted to RDF!");
         } catch (error) {

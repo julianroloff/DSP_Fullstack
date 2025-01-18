@@ -13,10 +13,15 @@ export const handleIfcUpload = (req, res) => {
             fs.mkdirSync(outputDirectory, { recursive: true });
         }
 
+        if (!fs.existsSync(ifcFilePath)) {
+            console.error(`Uploaded file not found: ${ifcFilePath}`);
+            return res.status(400).json({ message: "Uploaded file not found" });
+        }
+
         const pythonInterpreter = "/opt/anaconda3/bin/python"; // Adjust this path if needed
 
         // Command to execute the Python script
-        const command = `${pythonInterpreter} src/utils/ifc_to_rdf.py ${ifcFilePath} ${rdfFilePath}`;
+        const command = `${pythonInterpreter} src/utils/ifc_to_rdf.py "${ifcFilePath}" "${rdfFilePath}"`;
         
         exec(command, (error, stdout, stderr) => {
             console.log("Command executed:", command);
@@ -43,6 +48,10 @@ export const handleIfcUpload = (req, res) => {
                 }
             });
         });
+        console.log("Command executed:", command);
+        console.log("File exists:", fs.existsSync(ifcFilePath));
+        console.log("Output directory exists:", fs.existsSync(outputDirectory));
+
         
     } catch (error) {
         console.error("Error during IFC-to-RDF conversion:", error);

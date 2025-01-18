@@ -1,33 +1,32 @@
-import { spawn } from "child_process";
+import { exec } from "child_process";
 import path from "path";
 
-const compareUValues = (storedFilePath, regulationsFilePath) => {
+export const compareUValues = (storedFilePath, regulationsFilePath) => {
     return new Promise((resolve, reject) => {
-        const scriptPath = path.resolve("src/utils/compare_uvalues.py");
-        const process = spawn("python", [scriptPath, storedFilePath, regulationsFilePath]);
+        const pythonScript = path.resolve("src/utils/compare_uvalues.py");
+        const command = `python "${pythonScript}" "${storedFilePath}" "${regulationsFilePath}"`;
 
-        let output = "";
-        process.stdout.on("data", (data) => {
-            output += data.toString();
-        });
+        console.log("Executing command:", command);
 
-        process.stderr.on("data", (error) => {
-            console.error("Error:", error.toString());
-        });
+        exec(command, (error, stdout, stderr) => {
+            console.log("Command executed:", command);
+            console.log("stdout:", stdout);
+            console.log("stderr:", stderr);
 
-        process.on("close", (code) => {
-            if (code === 0) {
-                try {
-                    const results = JSON.parse(output);
-                    resolve(results);
-                } catch (error) {
-                    reject(new Error("Failed to parse comparison results"));
-                }
-            } else {
+            if (error) {
+                console.error("Error executing comparison script:", error);
                 reject(new Error("Comparison script failed"));
+                return;
+            }
+
+            try {
+                const results = JSON.parse(stdout.trim());
+                console.log("Parsed results:", results);
+                resolve(results);
+            } catch (parseError) {
+                console.error("Error parsing comparison results:", parseError);
+                reject(new Error("Failed to parse comparison results"));
             }
         });
     });
 };
-
-export { compareUValues };
