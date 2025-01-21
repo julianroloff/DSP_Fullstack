@@ -1,12 +1,13 @@
 import { exec } from "child_process";
 import path from "path";
 import fs from "fs";
+import { generateSummary } from "./summaryController.js";
 
 export const handleIfcUpload = (req, res) => {
     try {
         const ifcFilePath = path.resolve(req.file.path);
-        const outputDirectory = path.resolve("src/stored_rdf_files"); // Ensure files are saved in this directory
-        const rdfFilePath = path.join(outputDirectory, "stored.ttl"); // Always save as stored.ttl
+        const outputDirectory = path.resolve("src/stored_rdf_files");
+        const rdfFilePath = path.join(outputDirectory, "stored.ttl");
 
         // Ensure the output directory exists
         if (!fs.existsSync(outputDirectory)) {
@@ -18,29 +19,25 @@ export const handleIfcUpload = (req, res) => {
             return res.status(400).json({ message: "Uploaded file not found" });
         }
 
-        const pythonInterpreter = "/opt/anaconda3/bin/python"; // Adjust this path if needed
+        const pythonInterpreter = "/Users/jeremypalmerio/opt/miniconda3/envs/DSP/bin/python"; // Adjust this path if needed
+        const conversionCommand = `${pythonInterpreter} src/utils/ifc_to_rdf.py "${ifcFilePath}" "${rdfFilePath}"`;
 
-        // Command to execute the Python script
-        const command = `${pythonInterpreter} src/utils/ifc_to_rdf.py "${ifcFilePath}" "${rdfFilePath}"`;
-        
-        exec(command, (error, stdout, stderr) => {
-            console.log("Command executed:", command);
+        exec(conversionCommand, (error, stdout, stderr) => {
+            console.log("Conversion command executed:", conversionCommand);
             console.log("stdout:", stdout);
             console.log("stderr:", stderr);
-        
+
             if (error) {
-                console.error("Error executing Python script:", error);
+                console.error("Error executing conversion script:", error);
                 return res.status(500).json({
                     message: "Failed to process IFC file",
                     error: stderr || error.message,
                 });
             }
-        
-            res.status(200).json({
-                message: "File successfully converted and stored",
-                rdfFilePath,
-            });
-        
+
+            // Invoke the summary generation controller
+            generateSummary(rdfFilePath, res);
+
             // Clean up the temporary uploaded IFC file
             fs.unlink(ifcFilePath, (unlinkError) => {
                 if (unlinkError) {
@@ -48,11 +45,6 @@ export const handleIfcUpload = (req, res) => {
                 }
             });
         });
-        console.log("Command executed:", command);
-        console.log("File exists:", fs.existsSync(ifcFilePath));
-        console.log("Output directory exists:", fs.existsSync(outputDirectory));
-
-        
     } catch (error) {
         console.error("Error during IFC-to-RDF conversion:", error);
         res.status(500).json({ message: "Conversion failed", error: error.message });
