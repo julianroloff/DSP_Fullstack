@@ -19,7 +19,7 @@ export const handleIfcUpload = (req, res) => {
             return res.status(400).json({ message: "Uploaded file not found" });
         }
 
-        const pythonInterpreter = "/Users/jeremypalmerio/opt/miniconda3/envs/DSP/bin/python"; // Adjust this path if needed
+        const pythonInterpreter = "python"; // Adjust this path if needed
         const conversionCommand = `${pythonInterpreter} src/utils/ifc_to_rdf.py "${ifcFilePath}" "${rdfFilePath}"`;
 
         exec(conversionCommand, (error, stdout, stderr) => {
