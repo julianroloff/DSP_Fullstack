@@ -5,7 +5,7 @@ import BuildingImage from './buildingImage';
 import BuildingInformation from './buildingInformation';
 import Tabs from './tabs';
 import SearchBar from './searchBar';
-import BarChart from './BarChart.jsx';
+import ComponentComplianceChart from './BarChart.jsx';
 import RegulationList from './regulationList';
 
 class App extends Component {
@@ -13,21 +13,53 @@ class App extends Component {
         compareData: [],
         regulations: [],
         buildingData: [],
+        summaryData: [],
         fileUploaded: false,
     };
 
     handleFileUpload = async () => {
         try {
+            // Fetch and handle comparison data
             const response = await fetch("http://localhost:3000/api/compare-rdf");
             if (!response.ok) {
                 throw new Error(`Error: ${response.statusText}`);
             }
             const compareData = await response.json();
             this.setState({ fileUploaded: true, compareData });
+    
+            // Fetch the CSV summary data
+            const summaryResponse = await fetch("http://localhost:3000/api/upload-summary");
+            if (!summaryResponse.ok) {
+                throw new Error(`Error: ${summaryResponse.statusText}`);
+            }
+            const csvText = await summaryResponse.text();
+    
+            // Parse the CSV data into an array of objects
+            const summaryData = this.parseCSV(csvText);
+    
+            // Save the parsed data to the state
+            this.setState({ fileUploaded: true, summaryData });
         } catch (error) {
-            console.error("Error fetching comparison data:", error);
-            alert("Failed to fetch comparison data. Please try again.");
+            console.error("Error fetching data:", error);
+            alert("Failed to fetch comparison data or summary. Please try again.");
         }
+    };
+    
+    // Utility function to parse CSV into an array of objects
+    parseCSV = (csvText) => {
+        const lines = csvText.split("\n");
+        const headers = lines[0].split(","); // Get the headers from the first line
+        const rows = lines.slice(1); // Get all rows except the header
+    
+        return rows
+            .filter(row => row.trim() !== "") // Remove empty rows
+            .map(row => {
+                const values = row.split(",");
+                return headers.reduce((acc, header, index) => {
+                    acc[header] = isNaN(values[index]) ? values[index] : Number(values[index]);
+                    return acc;
+                }, {});
+            });
     };
     
 
@@ -102,9 +134,13 @@ class App extends Component {
                     </div>
                 </div>
                 <div className="list-container">
-                    <div className="barChart-container">
-                        <BarChart />
-                    </div>
+                <div className="barChart-container">
+                    <ComponentComplianceChart 
+                    summaryData={this.state.summaryData} 
+                    compareData={this.state.compareData}
+                    />
+                </div>
+
                     <div className="regulation-container">
                         <RegulationList 
                         title="Regulations and Standards for this Object" 

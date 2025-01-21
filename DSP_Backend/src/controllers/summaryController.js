@@ -12,7 +12,7 @@ export const generateSummary = (rdfFilePath, res) => {
             fs.mkdirSync(summaryDirectory, { recursive: true });
         }
 
-        const pythonInterpreter = "/Users/jeremypalmerio/opt/miniconda3/envs/DSP/bin/python"; // Adjust as needed
+        const pythonInterpreter = "python"; // Adjust as needed
         const summaryCommand = `${pythonInterpreter} src/utils/extractSummary.py "${rdfFilePath}" "${summaryFilePath}"`;
 
         exec(summaryCommand, (error, stdout, stderr) => {

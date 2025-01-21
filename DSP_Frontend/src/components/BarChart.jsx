@@ -12,33 +12,8 @@ import {
 // Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const ComponentComplianceChart = () => {
+const ComponentComplianceChart = ({ summaryData, compareData }) => {
     const [chartData, setChartData] = useState(null);
-
-    // Dummy data
-    const dummyData = {
-        labels: ["Windows", "Doors", "Walls"], // Component types
-        datasets: [
-            {
-                label: "Total",
-                data: [10, 8, 15], // Total components
-                backgroundColor: "#d3d3d3",
-                barPercentage: 0.6,
-            },
-            {
-                label: "With U-Values",
-                data: [6, 5, 9], // Components with U-values
-                backgroundColor: "#ff9800",
-                barPercentage: 0.6,
-            },
-            {
-                label: "Compliant",
-                data: [3, 2, 7], // Components meeting regulations
-                backgroundColor: "#4caf50",
-                barPercentage: 0.6,
-            },
-        ]
-    };
 
     // Chart options
     const options = {
@@ -51,9 +26,9 @@ const ComponentComplianceChart = () => {
                 callbacks: {
                     label: (context) => {
                         const value = context.raw;
-                        const total = dummyData.datasets[0].data[context.dataIndex];
-                        const percentage = ((value / total) * 100).toFixed(1);
-                        return `${context.dataset.label}: ${value} (${percentage}%)`;
+                        const total = context.dataset.data.reduce((sum, num) => sum + num, 0);
+                        const percentageWithU = ((value / total) * 100).toFixed(1);
+                        return `${context.dataset.label}: ${value} (${percentageWithU}%)`;
                     },
                 },
             },
@@ -63,7 +38,7 @@ const ComponentComplianceChart = () => {
                 stacked: true,
             },
             y: {
-                stacked: true,
+                stacked: false,
                 beginAtZero: true,
                 ticks: {
                     precision: 0,
@@ -72,31 +47,30 @@ const ComponentComplianceChart = () => {
         },
     };
 
+    // Populate the chart with summaryData
     useEffect(() => {
-        // Set dummy data initially
-        setChartData(dummyData);
+        if (summaryData && summaryData.length > 0) {
+            // Transform the summaryData into labels and datasets
+            const labels = summaryData.map((item) => item.IFC_Object);
+            const totalData = summaryData.map((item) => item.count);
+            const withUValueData = summaryData.map((item) => item.has_thermal_transmittance);
 
-        // Once the backend is ready, replace this with an API call
-        // Example:
-        // fetch("http://localhost:3000/api/component-stats")
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         // Transform data for chart
-        //         const labels = ["Windows", "Doors", "Walls"];
-        //         const totalData = [10, 8, 15]; // Replace with actual data
-        //         const withUValueData = [6, 5, 9]; // Replace with actual data
-        //         const compliantData = [3, 2, 7]; // Replace with actual data
+            let meetingRegs = [];
+            if (compareData && compareData.length > 0) {
+                meetingRegs = compareData.map((item) => item.regulationsMet ? 1 : 0); // Read regulationsMet from compareData
+            }
 
-        //         setChartData({
-        //             labels,
-        //             datasets: [
-        //                 { label: "Total", data: totalData, backgroundColor: "#d3d3d3" },
-        //                 { label: "With U-Values", data: withUValueData, backgroundColor: "#ff9800" },
-        //                 { label: "Compliant", data: compliantData, backgroundColor: "#4caf50" },
-        //             ],
-        //         });
-        //     });
-    }, []);
+            setChartData({
+                labels,
+                datasets: [
+                    { label: "With U-Values", data: withUValueData, backgroundColor: "#ff9800" },
+                    { label: "Total", data: totalData, backgroundColor: "#d3d3d3" },
+                    { label: "Meeting the Regulations", data: meetingRegs, backgroundColor: "#4caf50"},
+                    
+                ],
+            });
+        }
+    }, [summaryData, compareData]);
 
     if (!chartData) {
         return <div>Loading chart...</div>;
@@ -105,7 +79,7 @@ const ComponentComplianceChart = () => {
     return (
         <div className="card">
             <div className="card-header">
-                Component Compliance (Dummy Data)
+                Component Compliance
             </div>
             <div className="chart-container">
                 <Bar data={chartData} options={options} />

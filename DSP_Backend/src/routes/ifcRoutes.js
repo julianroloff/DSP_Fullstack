@@ -2,6 +2,8 @@ import express from "express"
 import multer from "multer"
 import { handleIfcUpload } from "../controllers/ifcToRdfController.js"
 import { compareUValues } from "../services/compareUValues.js"
+import path from 'path';
+import fs from 'fs';
 
 
 const router = express.Router();
@@ -39,23 +41,31 @@ router.get("/compare-rdf", async (req, res) => {
     }
 });
 
-router.get("/window-stats", async (req, res) => {
-    try {
-        // Load stored TTL file
-        const ttlFilePath = "src/stored_rdf_files/stored.ttl";
+router.get("/upload-summary", async (req, res) => {
+    const directory = path.resolve("src/data/summaries");
+    const csvPath = path.join(directory, "summary.csv");
 
-        // Logic to calculate stats
-        const windowStats = {
-            totalWindows: 4, // Replace with logic to count total windows
-            windowsWithUValues: 4, // Replace with logic to count windows with U-values
-            compliantWindows: 0 // Replace with logic to count compliant windows
-        };
-
-        res.status(200).json(windowStats);
-    } catch (error) {
-        console.error("Error calculating window statistics:", error);
-        res.status(500).json({ message: "Failed to calculate window statistics" });
+    if (!fs.existsSync(csvPath)) {
+        console.error("File not found:", csvPath);
+        return res.status(404).send("File not found.");
     }
+
+    console.log("Sending file:", csvPath);
+
+    // Log headers before sending
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader("Content-Disposition", `attachment; filename="summary.csv"`);
+    console.log("Response headers before sending:", res.getHeaders());
+
+    // Send the file
+    res.status(200).sendFile(csvPath, (err) => {
+        if (err) {
+            console.error("Error sending file:", err);
+            res.status(500).send("Error sending the file.");
+        } else {
+            console.log("File sent successfully.");
+        }
+    });
 });
 
 
