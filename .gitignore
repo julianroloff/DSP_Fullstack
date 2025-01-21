@@ -37,3 +37,7 @@ yarn-error.log*
 
 
 /DSP_Backend/stored_rdf_files
+/DSP_Backend/src/data/summaries
+/DSP_Backend/src/stored_rdf_files
+/DSP_Backend/uploads
+

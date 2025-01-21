@@ -1,5 +1,5 @@
 IFC_Object,count,has_thermal_transmittance
 IfcFurnishingElement,14,0
+IfcWall,5,0
 IfcWindow,4,4
 IfcDoor,3,0
-IfcWall,5,0
