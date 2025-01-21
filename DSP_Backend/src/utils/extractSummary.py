@@ -36,7 +36,7 @@ def process_ttl_to_csv(input_file):
     df_results = pd.DataFrame.from_dict(results, orient="index")
     df_results.reset_index(inplace=True)
     df_results.rename(columns={"index": "IFC_Object"}, inplace=True)
-
+    print(df_results)
     # Save to CSV
     return df_results
 
