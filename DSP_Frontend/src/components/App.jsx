@@ -5,7 +5,7 @@ import BuildingImage from './buildingImage';
 import BuildingInformation from './buildingInformation';
 import Tabs from './tabs';
 import SearchBar from './searchBar';
-import EnergySavingsGraph from './EnergySavingsGraph';
+import BarChart from './BarChart.jsx';
 import RegulationList from './regulationList';
 
 class App extends Component {
@@ -96,14 +96,14 @@ class App extends Component {
                         title="BIM Model"
                         />
                     </div>
-                    <div className="energySavingsGraph-container">
-                        <EnergySavingsGraph />
-                    </div>
-                </div>
-                <div className="list-container">
                     <div className="compareList-container">
                         <CompareList title="Component vs Regulation" data={compareData}
                         />
+                    </div>
+                </div>
+                <div className="list-container">
+                    <div className="barChart-container">
+                        <BarChart />
                     </div>
                     <div className="regulation-container">
                         <RegulationList 

@@ -39,7 +39,24 @@ router.get("/compare-rdf", async (req, res) => {
     }
 });
 
+router.get("/window-stats", async (req, res) => {
+    try {
+        // Load stored TTL file
+        const ttlFilePath = "src/stored_rdf_files/stored.ttl";
 
+        // Logic to calculate stats
+        const windowStats = {
+            totalWindows: 4, // Replace with logic to count total windows
+            windowsWithUValues: 4, // Replace with logic to count windows with U-values
+            compliantWindows: 0 // Replace with logic to count compliant windows
+        };
+
+        res.status(200).json(windowStats);
+    } catch (error) {
+        console.error("Error calculating window statistics:", error);
+        res.status(500).json({ message: "Failed to calculate window statistics" });
+    }
+});
 
 
 export default router;

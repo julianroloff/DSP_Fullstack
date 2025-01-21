@@ -20,18 +20,14 @@
     padding-bottom: 32px;
 }
 
-.compareList-container {
-    flex: 0 0 40%;
-    max-width: 40%;
-    box-sizing: border-box;
-}
-
 .regulation-container {
     flex: 0 0 60%;
     max-width: 60%;
     box-sizing: border-box;
 }
 
+
+/** Middle of the Page Component**/
 .imageGraph-container {
     display: flex; 
     width: 100%; 
@@ -43,12 +39,18 @@
 }
 
 .buildingImage-container {
-    flex: 1; 
-    max-width: 50%;
+    flex: 0 0 30%; 
+    max-width: 30%;
     box-sizing: border-box; 
 }
 
-.energySavingsGraph-container {
+.compareList-container {
+    flex: 0 0 70%;
+    max-width: 70%;
+    box-sizing: border-box;
+}
+
+.barChart-container {
     flex: 1; 
     max-width: 50%;
     box-sizing: border-box;
