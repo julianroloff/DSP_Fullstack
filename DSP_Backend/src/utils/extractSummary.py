@@ -1,7 +1,8 @@
 import pandas as pd
 from rdflib import Graph, URIRef, Literal
+import sys
 
-def process_ttl_to_csv(input_file, output_file):
+def process_ttl_to_csv(input_file):
     graph = Graph()
     graph.parse(input_file, format="ttl")
 
@@ -37,10 +38,29 @@ def process_ttl_to_csv(input_file, output_file):
     df_results.rename(columns={"index": "IFC_Object"}, inplace=True)
 
     # Save to CSV
-    df_results.to_csv(output_file, index=False)
+    return df_results
 
 if __name__ == "__main__":
-    input_path = "../stored_rdf_files/stored.ttl"  # Replace with your input file path
-    output_path = "../data/ifc_analysis_results.csv"  # Replace with your desired output file path
-    process_ttl_to_csv(input_path, output_path)
-    print(f"Results saved to {output_path}")
+    # input_path = "../stored_rdf_files/stored.ttl"  # Replace with your input file path
+    # output_path = "../data/ifc_analysis_results.csv"  # Replace with your desired output file path
+    # process_ttl_to_csv(input_path, output_path)
+    # print(f"Results saved to {output_path}")
+
+    if len(sys.argv) != 3:
+        print("Usage: python extractSummary.py <input_rdf_path> <output_csv_path>")
+        sys.exit(1)
+
+    input_rdf_path = sys.argv[1]
+    output_csv_path = sys.argv[2]
+
+    try:
+        # Generate summary data
+        csv_output = process_ttl_to_csv(input_rdf_path)
+
+        # Save the summary data to the specified file
+        csv_output.to_csv(output_csv_path, index=False)
+
+        print(f"Summary written to {output_csv_path}")
+    except Exception as error:
+        print(f"Failed to process the file: {error}")
+
