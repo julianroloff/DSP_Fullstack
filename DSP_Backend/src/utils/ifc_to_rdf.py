@@ -14,25 +14,24 @@ def convert_ifc_to_rdf(ifc_file_path):
         """
 
         # Extract elements of interest
-        for ifc_type, prefix in [("IfcWindow", "Window"), ("IfcWall", "Wall"), ("IfcDoor", "Door"), ("IfcFurnishingElement", "Frame")]:
+        for ifc_type, prefix in [("IfcWindow", "Window"), ("IfcWall", "Wall"), ("IfcDoor", "Door"), ("IfcCovering", "Ceiling"), ("IfcSlab", "Floor"), ("IfcCurtainWall", "Curtain_Wall"), ("IfcWallStandardCase", "Basic_Wall")]:
             elements = ifc_file.by_type(ifc_type)
             for index, element in enumerate(elements):
                 # Safely retrieve attributes using getattr()
                 name = getattr(element, "Name", "Unknown")
                 global_id = getattr(element, "GlobalId", "Unknown")
 
-                # Check for Thermal Transmittance if the element is a window
+                # Check for Thermal Transmittance for all elements
                 u_value = "Unknown"
-                if ifc_type == "IfcWindow":
-                    for rel in ifc_file.by_type("IfcRelDefinesByProperties"):
-                        if element.id() in [related.id() for related in rel.RelatedObjects]:
-                            property_set = rel.RelatingPropertyDefinition
-                            if hasattr(property_set, "HasProperties"):
-                                for prop in property_set.HasProperties:
-                                    if prop.Name == "ThermalTransmittance":
-                                        u_value = prop.NominalValue.wrappedValue
-                                        break
-                
+                for rel in ifc_file.by_type("IfcRelDefinesByProperties"):
+                    if element.id() in [related.id() for related in rel.RelatedObjects]:
+                        property_set = rel.RelatingPropertyDefinition
+                        if hasattr(property_set, "HasProperties"):
+                            for prop in property_set.HasProperties:
+                                if prop.Name == "ThermalTransmittance":
+                                    u_value = prop.NominalValue.wrappedValue
+                                    break
+
                 # Add RDF data for the element
                 rdf_data += f"""
                     ex:{prefix}{index} a ifc:{ifc_type} ;
@@ -40,6 +39,7 @@ def convert_ifc_to_rdf(ifc_file_path):
                         ex:hasGlobalId "{global_id}" ;
                         ex:hasThermalTransmittance "{u_value}" .
                 """
+
         
         return rdf_data
 

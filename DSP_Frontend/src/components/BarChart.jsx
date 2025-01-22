@@ -65,7 +65,6 @@ const ComponentComplianceChart = ({ summaryData, compareData }) => {
                 datasets: [
                     { label: "With U-Values", data: withUValueData, backgroundColor: "#ff9800" },
                     { label: "Total", data: totalData, backgroundColor: "#d3d3d3" },
-                    { label: "Meeting the Regulations", data: meetingRegs, backgroundColor: "#4caf50"},
                     
                 ],
             });
