@@ -1,17 +1,38 @@
 @prefix ex: <http://example.org/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ifc: <http://ifcowl.openbimstandards.org/IFC2X3_TC1#> .
 
 ex:Regulation1 a ex:Regulation ;
-    ex:appliesTo ex:IfcWindow ;
+    ex:appliesTo ifc:IfcWindow ;
     ex:maxUValue "2.2"^^xsd:float ;
     ex:unit "W/m²·K"^^xsd:string .
 
 ex:Regulation2 a ex:Regulation ;
-    ex:appliesTo ex:IfcDoor ;
-    ex:maxUValue "2.2"^^xsd:float ;
+    ex:appliesTo ifc:IfcDoor ;
+    ex:maxUValue "1.8"^^xsd:float ;
     ex:unit "W/m²·K"^^xsd:string .
 
 ex:Regulation3 a ex:Regulation ;
-    ex:appliesTo ex:Frame ;
-    ex:maxUValue "2.2"^^xsd:float ;
+    ex:appliesTo ifc:IfcWall ;
+    ex:maxUValue "0.3"^^xsd:float ;
+    ex:unit "W/m²·K"^^xsd:string .
+
+ex:Regulation4 a ex:Regulation ;
+    ex:appliesTo ifc:IfcSlab ;
+    ex:maxUValue "0.25"^^xsd:float ;
+    ex:unit "W/m²·K"^^xsd:string .
+
+ex:Regulation5 a ex:Regulation ;
+    ex:appliesTo ifc:IfcCovering ;
+    ex:maxUValue "0.2"^^xsd:float ;
+    ex:unit "W/m²·K"^^xsd:string .
+
+ex:Regulation6 a ex:Regulation ;
+    ex:appliesTo ifc:IfcCurtainWall ;
+    ex:maxUValue "1.5"^^xsd:float ;
+    ex:unit "W/m²·K"^^xsd:string .
+
+ex:Regulation7 a ex:Regulation ;
+    ex:appliesTo ifc:IfcWallStandardCase ;
+    ex:maxUValue "0.35"^^xsd:float ;
     ex:unit "W/m²·K"^^xsd:string .

@@ -1,0 +1,92 @@
+[
+  {
+    "component": "Window0",
+    "type": "IfcWindow",
+    "regulationsMet": false
+  },
+  {
+    "component": "Window1",
+    "type": "IfcWindow",
+    "regulationsMet": false
+  },
+  {
+    "component": "Window2",
+    "type": "IfcWindow",
+    "regulationsMet": false
+  },
+  {
+    "component": "Window3",
+    "type": "IfcWindow",
+    "regulationsMet": false
+  },
+  {
+    "component": "Wall0",
+    "type": "IfcWall",
+    "regulationsMet": true
+  },
+  {
+    "component": "Wall1",
+    "type": "IfcWall",
+    "regulationsMet": true
+  },
+  {
+    "component": "Wall2",
+    "type": "IfcWall",
+    "regulationsMet": true
+  },
+  {
+    "component": "Wall3",
+    "type": "IfcWall",
+    "regulationsMet": false
+  },
+  {
+    "component": "Wall4",
+    "type": "IfcWall",
+    "regulationsMet": false
+  },
+  {
+    "component": "Basic_Wall0",
+    "type": "IfcWallStandardCase",
+    "regulationsMet": false
+  },
+  {
+    "component": "Basic_Wall1",
+    "type": "IfcWallStandardCase",
+    "regulationsMet": false
+  },
+  {
+    "component": "Door1",
+    "type": "IfcDoor",
+    "regulationsMet": false
+  },
+  {
+    "component": "Door2",
+    "type": "IfcDoor",
+    "regulationsMet": false
+  },
+  {
+    "component": "Ceiling0",
+    "type": "IfcCovering",
+    "regulationsMet": false
+  },
+  {
+    "component": "Ceiling1",
+    "type": "IfcCovering",
+    "regulationsMet": false
+  },
+  {
+    "component": "Ceiling2",
+    "type": "IfcCovering",
+    "regulationsMet": false
+  },
+  {
+    "component": "Floor0",
+    "type": "IfcSlab",
+    "regulationsMet": true
+  },
+  {
+    "component": "Floor1",
+    "type": "IfcSlab",
+    "regulationsMet": false
+  }
+]

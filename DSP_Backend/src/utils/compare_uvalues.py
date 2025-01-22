@@ -12,11 +12,21 @@ def get_stored_uvalues(graph):
     query = """
     PREFIX ex: <http://example.org/>
     PREFIX ifc: <http://ifcowl.openbimstandards.org/IFC2X3_TC1#>
-    
-    SELECT ?window ?thermalTransmittance
+
+    SELECT ?element ?type ?thermalTransmittance
     WHERE {
-        ?window a ifc:IfcWindow ;
-               ex:hasThermalTransmittance ?thermalTransmittance .
+        ?element a ?ifcType ;
+                ex:hasThermalTransmittance ?thermalTransmittance .
+
+        VALUES (?ifcType ?type) {
+            (ifc:IfcWindow "Window")
+            (ifc:IfcWall "Wall")
+            (ifc:IfcDoor "Door")
+            (ifc:IfcCovering "Ceiling")
+            (ifc:IfcSlab "Floor")
+            (ifc:IfcCurtainWall "Curtain_Wall")
+            (ifc:IfcWallStandardCase "Basic_Wall")
+        }
     }
     """
     return graph.query(query)
@@ -24,6 +34,7 @@ def get_stored_uvalues(graph):
 def get_regulation_uvalues(graph):
     query = """
     PREFIX ex: <http://example.org/>
+    PREFIX ifc: <http://ifcowl.openbimstandards.org/IFC2X3_TC1#>
     SELECT ?component ?maxUValue
     WHERE {
         ?regulation a ex:Regulation ;
@@ -34,19 +45,63 @@ def get_regulation_uvalues(graph):
     return graph.query(query)
 
 def compare_uvalues(stored_uvalues, regulation_uvalues):
+
+    stored_uvalues = list(get_stored_uvalues(stored_graph))
+    print(f"Stored U-values: {stored_uvalues}", file=sys.stderr)
+
+    regulation_uvalues = list(get_regulation_uvalues(regulations_graph))
+    print(f"Regulation U-values: {regulation_uvalues}", file=sys.stderr)
+
     comparisons = []
-    for stored_component, stored_uvalue in stored_uvalues:
-        stored_base_type = "IfcWindow"
-        for reg_component, reg_uvalue in regulation_uvalues:
-            if stored_base_type == str(reg_component).split("/")[-1]:
-                status = "compliant" if float(stored_uvalue) <= float(reg_uvalue) else "non-compliant"
-                comparisons.append({
-                    "component": str(stored_component),
-                    "stored_uValue": float(stored_uvalue),
-                    "regulation_uValue": float(reg_uvalue),
-                    "status": status
-                })
+
+    # Normalize regulation map
+    regulation_map = {
+        str(reg_component).split("#")[-1]: float(reg_uvalue)  # Extract local name
+        for reg_component, reg_uvalue in regulation_uvalues
+    }
+
+    # Mapping between stored types and IFC names
+    type_mapping = {
+        "Window": "IfcWindow",
+        "Wall": "IfcWall",
+        "Door": "IfcDoor",
+        "Ceiling": "IfcCovering",
+        "Floor": "IfcSlab",
+        "Curtain_Wall": "IfcCurtainWall",
+        "Basic_Wall": "IfcWallStandardCase"
+    }
+
+    for stored_component, component_type, stored_uvalue in stored_uvalues:
+        if stored_uvalue == "Unknown":
+            continue  # Skip components with missing values
+
+        try:
+            stored_value = float(stored_uvalue)
+        except ValueError:
+            continue  # Skip invalid values
+
+        # Convert component_type to string for mapping lookup
+        component_type_str = str(component_type)
+        base_type = type_mapping.get(component_type_str)
+        if base_type is None:
+            print(f"Unknown type: {component_type_str}", file=sys.stderr)
+            continue  # Skip unknown component types
+
+        regulation_uvalue = regulation_map.get(base_type)
+        if regulation_uvalue is not None:
+            status = "compliant" if stored_value <= regulation_uvalue else "non-compliant"
+            comparisons.append({
+                "component": str(stored_component),
+                "type": base_type,
+                "stored_uValue": stored_value,
+                "regulation_uValue": regulation_uvalue,
+                "status": status
+            })
+
+
     return comparisons
+
+
 
 if __name__ == "__main__":
     try:

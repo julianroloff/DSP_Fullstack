@@ -14,6 +14,7 @@ class App extends Component {
         regulations: [],
         buildingData: [],
         summaryData: [],
+        percentage: [],
         fileUploaded: false,
     };
 
@@ -34,11 +35,19 @@ class App extends Component {
             }
             const csvText = await summaryResponse.text();
     
-            // Parse the CSV data into an array of objects
             const summaryData = this.parseCSV(csvText);
     
-            // Save the parsed data to the state
             this.setState({ fileUploaded: true, summaryData });
+
+            const percentageRespone = await fetch("http://localhost:3000/api/get-percentage");
+            if (!percentageRespone.ok){
+                throw new Error(`Error: ${percentageRespone.statusText}`);
+            }
+
+            const percentage = await percentageRespone.json()
+            this.setState({ fileUploaded: true, percentage });
+
+
         } catch (error) {
             console.error("Error fetching data:", error);
             alert("Failed to fetch comparison data or summary. Please try again.");
@@ -80,7 +89,7 @@ class App extends Component {
             return <p style={{ textAlign: 'center', marginTop: '20px' }}>Please upload an IFC file.</p>;
         }
 
-        const { buildingData, compareData } = this.state;
+        const { buildingData, compareData, percentage } = this.state;
 
         return (
             <React.Fragment>
@@ -116,8 +125,8 @@ class App extends Component {
                     <div className="infoBvsR-container">
                         <BuildingInformation 
                         title="Building vs Regulation" 
-                        information="27% Retrofit" 
-                        additionalInfo="*to meet Regulations until 2030"
+                        information= {<b>{`${percentage.percentage}%`}</b>}
+                        additionalInfo="*of envelop components are not meeting regulations and need to be retrofitted"
                         />
                     </div>
                 </div>
