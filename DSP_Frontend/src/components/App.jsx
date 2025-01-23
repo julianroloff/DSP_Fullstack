@@ -131,10 +131,10 @@ class App extends Component {
                     </div>
                 </div>
                 <div className="imageGraph-container">
-                    <div className="buildingImage-container">
-                        <BuildingImage 
-                        image="building.jpg" 
-                        title="BIM Model"
+                    <div className="barChart-container">
+                        <ComponentComplianceChart 
+                        summaryData={this.state.summaryData} 
+                        compareData={this.state.compareData}
                         />
                     </div>
                     <div className="compareList-container">
@@ -143,13 +143,13 @@ class App extends Component {
                     </div>
                 </div>
                 <div className="list-container">
-                <div className="barChart-container">
-                    <ComponentComplianceChart 
-                    summaryData={this.state.summaryData} 
-                    compareData={this.state.compareData}
-                    />
-                </div>
-
+                    {/*}
+                    <div className="buildingImage-container">
+                        <BuildingImage 
+                        image="building.jpg" 
+                        title="BIM Model"
+                        />
+                    </div>*/}
                     <div className="regulation-container">
                         <RegulationList 
                         title="Regulations and Standards for this Object" 

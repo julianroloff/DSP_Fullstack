@@ -21,8 +21,8 @@
 }
 
 .regulation-container {
-    flex: 0 0 60%;
-    max-width: 60%;
+    flex: 0 0 100%;
+    max-width: 100%;
     box-sizing: border-box;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .compareList-container {
-    flex: 0 0 70%;
+    flex: 0 0 60%;
     max-width: 70%;
     box-sizing: border-box;
 }
