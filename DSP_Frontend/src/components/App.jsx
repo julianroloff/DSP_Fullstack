@@ -133,7 +133,8 @@ class App extends Component {
                 <div className="imageGraph-container">
                     <div className="buildingImage-container">
                         <BuildingImage 
-                        image="building.jpg" 
+                        // image="building.jpg"
+                        image="img.png"
                         title="BIM Model"
                         />
                     </div>
