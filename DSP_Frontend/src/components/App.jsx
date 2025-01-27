@@ -11,7 +11,13 @@ import RegulationList from './regulationList';
 class App extends Component {
     state = {
         compareData: [],
-        regulations: [],
+        regulations: [
+            {
+                name: "Praktijkboek Bouwbesluit 2012",
+                link: "https://example.com/Praktijkboek-Bouwbesluit-2012",
+                pdf: "https://example.com/Praktijkboek-Bouwbesluit-2012.pdf",
+            },
+        ],
         buildingData: [],
         summaryData: [],
         percentage: [],
